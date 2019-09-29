@@ -51,7 +51,7 @@
   </head>
 <body>
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="home2.php">INTERNETHOME.COM</a>
@@ -80,7 +80,7 @@
       //$cn->close();
       ?>
   </h1>
-  <center><p><font size=25>Here is the list of items that you can sync with us.</font></p>
+	<p>Here is the list of items that you can sync with us.</p>
   <div class="flip-box">
   <div class="flip-box-inner">
     <div class="flip-box-front">
@@ -122,7 +122,7 @@
       </form>
     </div>
   </div>
-</center>
+
 </div>
 
 </body>

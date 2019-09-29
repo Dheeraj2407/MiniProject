@@ -351,9 +351,9 @@ hr {
   font-size: 80px;
   color: #fff;
   text-align: center;
-  -webkit-animation: glow 1s ease-in-out infinite alternate;
-  -moz-animation: glow 1s ease-in-out infinite alternate;
-  animation: glow 1s ease-in-out infinite alternate;
+  -webkit-animation: glow 3s ease-in-out infinite alternate;
+  -moz-animation: glow 3s ease-in-out infinite alternate;
+  animation: glow 3s ease-in-out infinite alternate;
 }
 
 @-webkit-keyframes glow {
@@ -372,47 +372,58 @@ hr {
 }
 
 
+/*Sidenav*/
 
-
-.sidenav {
-    height:0px;
-    width: 100%;
-    position: fixed;
-    z-index: 1;
-    bottom: 0;
-    left: 0;
-    background-color: #111;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 0px;
-   
+.overlay {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0, 0.9);
+  overflow-x: hidden;
+  transition: 0.5s;
 }
 
-.sidenav a {
-    padding: 15px 0px 3px 20px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-	float:left;
+.overlay-content {
+  position: relative;
+  top: 25%;
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
 }
 
-.sidenav a:hover {
-    color: #f1f1f1;
+.overlay a {
+  padding: 8px;
+  text-decoration: none;
+  font-size: 36px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
 }
 
-.sidenav .closebtn {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
+.overlay a:hover, .overlay a:focus {
+  color: #f1f1f1;
 }
+
+.overlay .closebtn {
+  position: absolute;
+  top: 20px;
+  right: 45px;
+  font-size: 60px;
+}
+
 @media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
+  .overlay a {font-size: 20px}
+  .overlay .closebtn {
+  font-size: 40px;
+  top: 15px;
+  right: 35px;
+  }
 }
+
 
 </style>
 </head>
@@ -422,19 +433,11 @@ hr {
 
 <div id="phrase" class="glow"><span style="cursor:pointer" onclick="openNav()">Connector Votre Maison &reg;</span></div>
 
-<center>
+
 <br>
 <canvas id="canvas" width="400" height="400"></canvas>
-</center>
 
-<div id="mySidenav" class="sidenav">
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <a href="#">About</a>
-  <a href="#">Services</a>
-  <a href="#">Clients</a>
-  <a href="#" onclick="document.getElementById('id03').style.display='block'">Admin</a>
-  <a href="#" onclick="contacts()">Contact</a>
-</div>
+
 
 <div id="id03" class="modal1">
   
@@ -457,7 +460,6 @@ hr {
 
     <div class="container1" style="background-color:#f1f1f1">
       <button type="button" onclick="document.getElementById('id03').style.display='none'" class="cancelbtn1">Cancel</button>
-      <span class="psw1">Forgot <a href="#">password?</a></span>
     </div>
   </form>
 </div>
@@ -483,11 +485,20 @@ hr {
 
     <div class="container1" style="background-color:#f1f1f1">
       <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn1">Cancel</button>
-      <span class="psw1">Forgot <a href="#">password?</a></span>
+      <!--span class="psw1">Forgot <a href="#">password?</a></span-->
     </div>
   </form>
 </div>
 
+<!--Sidenav-->
+<div id="myNav" class="overlay">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <div class="overlay-content">
+  <a href="#" onclick="closeNav();document.getElementById('id03').style.display='block'">Admin Login</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </div>
+</div>
 
 
 
@@ -509,10 +520,19 @@ hr {
 
        
     <input type="password" id="psw" placeholder="Password" name="psw" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
-    
+    <div id="message">
+       <h3>Password must contain the following:</h3>
+       <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+       <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+       <p id="number" class="invalid">A <b>number</b></p>
+       <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+    </div>    
 
       
       <input type="password" id="psw-repeat" placeholder="Confirm Password" name="psw-repeat" required>
+      <div id="psw_message">
+       <p id="password" class="invalid"><b>Passwords match</b></p>
+    </div>
       <div id="admin" style="display: none">
       <input type="text" placeholder="AdminId" name="AdminID">
       </div>
@@ -523,16 +543,7 @@ hr {
         <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
         <button type="submit" name="submit" id="signup" class="signupbtn disabled" value="signup" disabled="true">Sign Up</button>
       </div>
-     <div id="message">
-       <h3>Password must contain the following:</h3>
-       <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
-       <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
-       <p id="number" class="invalid">A <b>number</b></p>
-       <p id="length" class="invalid">Minimum <b>8 characters</b></p>
-    </div>
-    <div id="psw_message">
-       <p id="password" class="invalid"><b>Passwords match</b></p>
-    </div>
+    
   </form>
 </div>
 <script>
@@ -569,6 +580,7 @@ retype.onfocus = function() {
 // When the user clicks on the password field, show the message box
 myInput.onfocus = function() {
     document.getElementById("message").style.display = "block";
+    window.scrollBy(0,100);
 }
 
 // When the user clicks outside of the retype-password field, hide the message box
@@ -592,7 +604,7 @@ myInput.onblur = function() {
 
 // When the user starts to type something inside the retype-password field
 retype.onkeyup = function() {
-  if(myInput.value.localeCompare(retype.value)==0) {
+  if(myInput.value.localeCompare(retype.value)==0 && myInput.value!='') {
     password.classList.remove("invalid");
     password.classList.add("valid");
     signup.classList.remove("disabled");
@@ -649,107 +661,20 @@ myInput.onkeyup = function() {
  }
 }
 
-
-
-
-function openNav() {
-    document.getElementById("mySidenav").style.height = "65px";
-}
-
-function closeNav() {
-    document.getElementById("mySidenav").style.height= "0px";
-}
-
 function admin($check,$input) {
   if(document.getElementById($check).checked)
     document.getElementById($input).style.display="block";
   else
     document.getElementById($input).style.display="none";
 }
-
-/*
-var canvas = document.getElementById("canvas");
-var ctx = canvas.getContext("2d");
-var radius = canvas.height / 2;
-ctx.translate(radius, radius);
-radius = radius * 0.90;
-setInterval(drawClock, 1000);
-
-function drawClock() {
-  drawFace(ctx, radius);
-  drawNumbers(ctx, radius);
-  drawTime(ctx, radius);
+/*Sidenav*/
+function openNav() {
+  document.getElementById("myNav").style.width = "100%";
 }
 
-function drawFace(ctx, radius) {
-  var grad;
-  ctx.beginPath();
-  ctx.arc(0, 0, radius, 0, 2*Math.PI);
-  ctx.fillStyle = 'white';
-  ctx.fill();
-  grad = ctx.createRadialGradient(0,0,radius*0.95, 0,0,radius*1.05);
-  grad.addColorStop(0, '#333');
-  grad.addColorStop(0.5, 'white');
-  grad.addColorStop(1, '#333');
-  ctx.strokeStyle = grad;
-  ctx.lineWidth = radius*0.1;
-  ctx.stroke();
-  ctx.beginPath();
-  ctx.arc(0, 0, radius*0.1, 0, 2*Math.PI);
-  ctx.fillStyle = '#333';
-  ctx.fill();
+function closeNav() {
+  document.getElementById("myNav").style.width = "0%";
 }
-
-function drawNumbers(ctx, radius) {
-  var ang;
-  var num;
-  ctx.font = radius*0.15 + "px arial";
-  ctx.textBaseline="middle";
-  ctx.textAlign="center";
-  for(num = 1; num < 13; num++){
-    ang = num * Math.PI / 6;
-    ctx.rotate(ang);
-    ctx.translate(0, -radius*0.85);
-    ctx.rotate(-ang);
-    ctx.fillText(num.toString(), 0, 0);
-    ctx.rotate(ang);
-    ctx.translate(0, radius*0.85);
-    ctx.rotate(-ang);
-  }
-}
-
-function drawTime(ctx, radius){
-    var now = new Date();
-    var hour = now.getHours();
-    var minute = now.getMinutes();
-    var second = now.getSeconds();
-    //hour
-    hour=hour%12;
-    hour=(hour*Math.PI/6)+
-    (minute*Math.PI/(6*60))+
-    (second*Math.PI/(360*60));
-    drawHand(ctx, hour, radius*0.5, radius*0.07);
-    //minute
-    minute=(minute*Math.PI/30)+(second*Math.PI/(30*60));
-    drawHand(ctx, minute, radius*0.8, radius*0.07);
-    // second
-    second=(second*Math.PI/30);
-    drawHand(ctx, second, radius*0.9, radius*0.02);
-}
-
-function drawHand(ctx, pos, length, width) {
-    ctx.beginPath();
-    ctx.lineWidth = width;
-    ctx.lineCap = "round";
-    ctx.moveTo(0,0);
-    ctx.rotate(pos);
-    ctx.lineTo(0, -length);
-    ctx.stroke();
-    ctx.rotate(-pos);
-}
-function contacts() {
-	alert("Dheeraj:8667661936\nImmanuel:9482880387");
-}*/
 </script>
 
 </body>
