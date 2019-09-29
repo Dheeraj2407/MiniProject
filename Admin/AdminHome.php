@@ -29,7 +29,6 @@
 </nav>
   
 <div class="container">
-  <br><br>
   <h1>Welcome <?php
   $cn=mysqli_connect("localhost","root","","IOT");
   session_start();

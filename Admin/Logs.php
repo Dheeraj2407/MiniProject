@@ -40,10 +40,6 @@ $cn=mysqli_connect("localhost","root","","IOT");
         SELECT * FROM LOGS ORDER BY EMAIL") or die( mysqli_error($cn) );
     if( mysqli_num_rows($contacts) > 0 )?>
 </head>
-<br>
-<br>
-<br>
-<br>
     <table id="Logs-list" class="w3-table-all w3-centered w3-hoverable w3-card-4"> 
             <tr class="w3-black">
                 <th>Email</th>

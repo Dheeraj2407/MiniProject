@@ -41,17 +41,11 @@ $cn=mysqli_connect("localhost","root","","IOT");
         SELECT * FROM CUSTOMER ORDER BY UNAME") or die( mysqli_error($cn) );
     if( mysqli_num_rows($contacts) > 0 )?>
 </head>
-<br>
-<br>
-<br>
-<br>
     <table id="Customer-list" class="w3-table-all w3-centered w3-hoverable w3-card-4">
             <tr class="w3-black">
                 <th>Email</th>
-                <th>Uname</th>
+                <th>User Name</th>
                 <th>Phone</th>
-
-  <th>Action</th>
             </tr>
        
         <?php while( $customer = mysqli_fetch_array( $contacts) ) : ?>
@@ -60,11 +54,7 @@ $cn=mysqli_connect("localhost","root","","IOT");
                 
                 <td><?php echo $customer[1]; ?></td>
                 
-                <td><?php echo $customer[2]; ?></td>
-                <td class="customer-delete"><form action='delete1.php' method="post">
-<input type="hidden" name="name" value="<?php echo $customer[0] ?>">
-<input type="submit" name="submit" value="Delete" class="w3-btn w3-red">
-</form></td>                
+                <td><?php echo $customer[2]; ?></td>               
             </tr>
         <?php endwhile; ?>
     </table>
