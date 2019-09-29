@@ -23,7 +23,7 @@
       
     </ul>
     <ul class="nav navbar-nav navbar-right">
-       <li><a href="home2.php"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+       <li><a href="../home2.php"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
     </ul>
   </div>
 </nav>

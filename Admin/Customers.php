@@ -30,8 +30,6 @@
   </div>
 </nav>
 
-<html>
-<head>
 <?php
 session_start();
 if(!isset($_SESSION['aname']))
@@ -40,7 +38,6 @@ $cn=mysqli_connect("localhost","root","","IOT");
     $contacts = mysqli_query($cn,"
         SELECT * FROM CUSTOMER ORDER BY UNAME") or die( mysqli_error($cn) );
     if( mysqli_num_rows($contacts) > 0 )?>
-</head>
     <table id="Customer-list" class="w3-table-all w3-centered w3-hoverable w3-card-4">
             <tr class="w3-black">
                 <th>Email</th>
@@ -58,3 +55,5 @@ $cn=mysqli_connect("localhost","root","","IOT");
             </tr>
         <?php endwhile; ?>
     </table>
+</body>
+</html>

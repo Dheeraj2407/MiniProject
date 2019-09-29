@@ -7,7 +7,7 @@
   <script src="jquery.min.js"></script>
   <script src="bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
   <?php include 'functions.php';session_start();?>
-<?php
+<!--?php
  $email=$_SESSION['uname'];
  $red=$cn->query("SELECT IP FROM DEVICES WHERE EMAIL='$email'");
  if($red->num_rows==0 && !isset($_GET["IP"])){
@@ -52,7 +52,7 @@
   }
 
 });
-</script>
+</script-->
 
 </head>
 <body>
@@ -64,7 +64,6 @@
     </div>
     <ul class="nav navbar-nav">
       <li><a href="CustomerHome.php">Home</a></li>
-      <li><a href="Devices.php">Devices</a></li>
       <li class="active"><a href="#">Your Devices</a></li>
       <li><a href="AboutYou.php">About You</a></li>
     </ul>
@@ -75,9 +74,8 @@
 </nav>
   
 <div class="container">
-  <br><br>
   <h1>Welcome <?php
-      // /$email=$_SESSION['uname'];
+      $email=$_SESSION['uname'];
       /*if($email=="")
        header("location:home2.php");*/
       $result=$cn->query("SELECT * FROM CUSTOMER WHERE EMAIL='$email'");
@@ -88,7 +86,7 @@
   </h1>
   <p>A navigation bar is a navigation header that is placed at the top of the page.</p>
   <center id=1></center>
-  <?php
+  <!--?php
     $status=$cn->query("SELECT STATUS FROM BULB_STATUS WHERE IP IN (SELECT IP FROM DEVICES WHERE EMAIL='$email')");
     $status=$status->fetch_array();
     if($status[0]=='ON')
@@ -99,7 +97,7 @@
 
 <form action="YourDevices.php" method="GET">
   <center><button name="status" onclick="submit" value="<?php echo $pic ?>"><img id="myImage" src="<?php echo $pic ?>" width="100" height="180"></button></center>
-</form>
+</form-->
 
   
 </div>

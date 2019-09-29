@@ -17,7 +17,6 @@
     </div>
     <ul class="nav navbar-nav">
       <li class="active"><a href="#">Home</a></li>
-      <li><a href="Devices.php">Devices</a></li>
       <li><a href="YourDevices.php">Your Devices</a></li>
       <li><a href="AboutYou.php">About You</a></li>
     </ul>

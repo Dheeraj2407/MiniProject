@@ -112,7 +112,6 @@ input:checked + .slider:before {
     </div>
     <ul class="nav navbar-nav">
       <li><a href="CustomerHome.php">Home</a></li>
-      <li><a href="Devices.php">Devices</a></li>
       <li><a href="YourDevices.php">Your Devices</a></li>
       <li class="active"><a href="#">About You</a></li>
     </ul>
@@ -136,7 +135,7 @@ input:checked + .slider:before {
 
 
 
-  <table style="font-size: 20px;margin: 10px">
+  <table style="font-size: 20px;margin: 10px;padding:10px">
 
     <tr>
       <td>Email:</td>
