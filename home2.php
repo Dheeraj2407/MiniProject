@@ -41,20 +41,42 @@ if($_SERVER['REQUEST_METHOD']=="POST") {
    $admin=test_input($_POST['AdminID']);
    $account="";
    
-   if (!mysqli_query($cn,"INSERT INTO CUSTOMER VALUES ('$email','$name','$phone','$pass')"))
+   if (!mysqli_query($cn,"INSERT INTO CUSTOMER VALUES ('$email','$name','$phone','$pass','0')"))
    {
     echo "<script>alert('Email already exists')</script>";
    
    }
   else{
+    /*Creating channel on thingspeak*/
+    # Our new data
+    $data = array(
+      'api_key' => 'U29BKV0D037L56DJ',
+      'name' => $email
+    );
+    # Create a connection
+    $url = 'https://api.thingspeak.com/channels.json';
+    $ch = curl_init($url);
+    # Form data string
+    $postString = http_build_query($data, '', '&');
+    # Setting our options
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $postString);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    # Get the response
+    $response = curl_exec($ch);
+    $json=json_decode($response);
+    $id=$json->id;
+    $g=mysqli_query($cn,"UPDATE CUSTOMER set channelid='$id' where EMAIL='$email'");
+    curl_close($ch);
     
+    /*End*/
     if(isset($admin)){
      if($cn->query("INSERT INTO ADMIN VALUES('$email','$admin')")){
       $account=" admin account created"; 
      }
      else
       $account=" account created";
-     echo "<script>alert('Signup successfull $account')</script>";
+     echo "<script>alert('Signup successfull ')</script>";
    } 
   }
 } 
