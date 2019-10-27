@@ -25,24 +25,28 @@
       
     </ul>
     <ul class="nav navbar-nav navbar-right">
-       <li><a href="../home2.php"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+      <li><input type="search" placeholder="Search customers..." id="search_cust" class="navbar-form" value=""></li>
+      <li><a href="../home2.php"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
     </ul>
   </div>
 </nav>
 
 <?php
-session_start();
-if(!isset($_SESSION['aname']))
-  header("location:../home2.php");
-$cn=mysqli_connect("localhost","root","","IOT");
-    $contacts = mysqli_query($cn,"
-        SELECT * FROM CUSTOMER ORDER BY UNAME") or die( mysqli_error($cn) );
-    if( mysqli_num_rows($contacts) > 0 )?>
-    <table id="Customer-list" class="w3-table-all w3-centered w3-hoverable w3-card-4">
+  session_start();
+  $search_text=" * ";
+  if(!isset($_SESSION['aname']))
+    header("location:../home2.php");
+  $cn=mysqli_connect("localhost","root","","IOT");
+  $contacts = mysqli_query($cn,"SELECT * FROM CUSTOMER ORDER BY UNAME") or die( mysqli_error($cn) );
+  if( mysqli_num_rows($contacts) > 0 )
+?>
+  <p id="table"></p>
+   <table id="Customer-list" class="w3-table-all w3-centered w3-hoverable w3-card-4">
             <tr class="w3-black">
                 <th>Email</th>
                 <th>User Name</th>
                 <th>Phone</th>
+                <th>Channel Id</th>
             </tr>
        
         <?php while( $customer = mysqli_fetch_array( $contacts) ) : ?>
@@ -51,9 +55,35 @@ $cn=mysqli_connect("localhost","root","","IOT");
                 
                 <td><?php echo $customer[1]; ?></td>
                 
-                <td><?php echo $customer[2]; ?></td>               
+                <td><?php echo $customer[2]; ?></td>
+                <td><?php echo $customer[4]; ?></td>               
             </tr>
         <?php endwhile; ?>
     </table>
+<script>
+  var s=document.getElementById("search_cust");
+  var tab=document.getElementById("table");
+  var l=document.getElementById("Customer-list");
+  tab.appendChild(l);
+  function loadTable(){
+    var x=new XMLHttpRequest();
+    x.onreadystatechange=function(){
+      if(this.readyState==4 && this.status==200)
+        tab.innerHTML=this.responseText;
+    };
+    x.open("GET","getcustomer.php?q="+s.value,true);
+    x.send();
+  }
+  s.onkeypress=function(){
+    if(s.value!==""){
+      tab.removeChild(l);
+      loadTable();
+    }
+    else{
+      tab.innerHTML="";
+      tab.appendChild(l);
+    }
+  }
+</script>
 </body>
 </html>
