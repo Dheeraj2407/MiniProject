@@ -47,6 +47,8 @@
                 <th>User Name</th>
                 <th>Phone</th>
                 <th>Channel Id</th>
+                <th>Write API</th>
+                <th>Read API</th>
             </tr>
        
         <?php while( $customer = mysqli_fetch_array( $contacts) ) : ?>
@@ -57,6 +59,8 @@
                 
                 <td><?php echo $customer[2]; ?></td>
                 <td><?php echo $customer[4]; ?></td>               
+                <td><?php echo $customer[5]; ?></td>               
+                <td><?php echo $customer[6]; ?></td>               
             </tr>
         <?php endwhile; ?>
     </table>

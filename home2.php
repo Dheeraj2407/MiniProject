@@ -41,7 +41,7 @@ if($_SERVER['REQUEST_METHOD']=="POST") {
    $admin=test_input($_POST['AdminID']);
    $account="";
    
-   if (!mysqli_query($cn,"INSERT INTO CUSTOMER VALUES ('$email','$name','$phone','$pass','0')"))
+   if (!mysqli_query($cn,"INSERT INTO CUSTOMER VALUES ('$email','$name','$phone','$pass','0','0','0')"))
    {
     echo "<script>alert('Email already exists')</script>";
    
@@ -66,7 +66,11 @@ if($_SERVER['REQUEST_METHOD']=="POST") {
     $response = curl_exec($ch);
     $json=json_decode($response);
     $id=$json->id;
-    $g=mysqli_query($cn,"UPDATE CUSTOMER set channelid='$id' where EMAIL='$email'");
+    $api_keys=[];
+    foreach($json->api_keys as $key=>$value){
+        array_push($api_keys,$value->api_key);
+    }
+    $g=mysqli_query($cn,"UPDATE CUSTOMER set channelid='$id',read_api='$api_keys[1]',write_api='$api_keys[0]' where EMAIL='$email'");
     curl_close($ch);
     
     /*End*/
@@ -76,7 +80,7 @@ if($_SERVER['REQUEST_METHOD']=="POST") {
      }
      else
       $account=" account created";
-     echo "<script>alert('Signup successfull ')</script>";
+      echo "<script>alert('Signup successful')</script>";
    } 
   }
 } 
