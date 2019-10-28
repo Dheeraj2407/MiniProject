@@ -51,7 +51,15 @@ if($_SERVER['REQUEST_METHOD']=="POST") {
     # Our new data
     $data = array(
       'api_key' => 'U29BKV0D037L56DJ',
-      'name' => $email
+      'name' => $email,
+      'field1' => 'field1',
+      'field2' => 'field2',
+      'field3' => 'field3',
+      'field4' => 'field4',
+      'field5' => 'field5',
+      'field6' => 'field6',
+      'field7' => 'field7',
+      'field8' => 'field8',
     );
     # Create a connection
     $url = 'https://api.thingspeak.com/channels.json';

@@ -8,6 +8,8 @@
     $cust=$details->fetch_array();
     $fields=$cn->query("SELECT * FROM FIELDS WHERE Email='$email'");
     $fields=$fields->fetch_array();
+    $out=$cn->query("SELECT * FROM OUTCHECK WHERE Email='$email'");
+    $out=$out->fetch_array();
 ?> 
 <meta charset="utf-9">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -34,42 +36,42 @@
         <tr>
             <td><b>Field 1:</b></td>
             <td><input type="text" name='field1' value=<?php echo $fields[1]?>></td>
-            <td>Output: <input type="checkbox" name="f1"></td>
+            <td>Output: <input type="checkbox" name="f1" <?php if($out[1]==1) echo "checked"?>></td>
         </tr>
         <tr>
             <td><b>Field 2:</b></td>
             <td><input type="text" name='field2' value=<?php echo $fields[2]?>></td>
-            <td>Output: <input type="checkbox" name="f2"></td>
+            <td>Output: <input type="checkbox" name="f2" <?php if($out[2]==1) echo "checked"?>></td>
         </tr>
         <tr>
             <td><b>Field 3:</b></td>
             <td><input type="text" name='field3' value=<?php echo $fields[3]?>></td>
-            <td>Output: <input type="checkbox" name="f3"></td>
+            <td>Output: <input type="checkbox" name="f3" <?php if($out[3]==1) echo "checked"?>></td>
         </tr>
         <tr>
             <td><b>Field 4:</b></td>
             <td><input type="text" name='field4' value=<?php echo $fields[4]?>></td>
-            <td>Output: <input type="checkbox" name="f4"></td>
+            <td>Output: <input type="checkbox" name="f4" <?php if($out[4]==1) echo "checked"?>></td>
         </tr>
         <tr>
             <td><b>Field 5:</b></td>
             <td><input type="text" name='field5' value=<?php echo $fields[5]?>></td>
-            <td>Output: <input type="checkbox" name="f5"></td>
+            <td>Output: <input type="checkbox" name="f5" <?php if($out[5]==1) echo "checked"?>></td>
         </tr>
         <tr>
             <td><b>Field 6:</b></td>
             <td><input type="text" name='field6' value=<?php echo $fields[6]?>></td>
-            <td>Output: <input type="checkbox" name="f6"></td>
+            <td>Output: <input type="checkbox" name="f6" <?php if($out[6]==1) echo "checked"?>></td>
         </tr>
         <tr>
             <td><b>Field 7:</b></td>
             <td><input type="text" name='field7' value=<?php echo $fields[7]?>></td>
-            <td>Output: <input type="checkbox" name="f7"></td>
+            <td>Output: <input type="checkbox" name="f7" <?php if($out[7]==1) echo "checked"?>></td>
         </tr>
         <tr>
             <td><b>Field 8:</b></td>
             <td><input type="text" name='field8' value=<?php echo $fields[8]?>></td>
-            <td>Output: <input type="checkbox" name="f8"></td>
+            <td>Output: <input type="checkbox" name="f8" <?php if($out[8]==1) echo "checked"?>></td>
         </tr>
         <tr>
             <td></td><td><input type="submit" class='btn btn-primary'></td>
@@ -87,6 +89,7 @@
                 $a[$i]=0;
         }
         $r=$cn->query("UPDATE OUTCHECK SET F1=$a[1],F2=$a[2],F3=$a[3],F4=$a[4],F5=$a[5],F6=$a[6],F7=$a[7],F8=$a[8]");
+        echo "<script>location.href='Customers.php'</script>";
     }
 ?>
 </body>
