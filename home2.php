@@ -71,6 +71,9 @@ if($_SERVER['REQUEST_METHOD']=="POST") {
         array_push($api_keys,$value->api_key);
     }
     $g=mysqli_query($cn,"UPDATE CUSTOMER set channelid='$id',read_api='$api_keys[1]',write_api='$api_keys[0]' where EMAIL='$email'");
+    $g=mysqli_query($cn,"INSERT INTO FIELDS VALUES('$email','','','','','','','','')");
+    $g=mysqli_query($cn,"INSERT INTO OUTCHECK (Email) VALUES('$email')");
+
     curl_close($ch);
     
     /*End*/

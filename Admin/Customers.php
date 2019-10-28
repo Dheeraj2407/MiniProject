@@ -52,7 +52,7 @@
             </tr>
        
         <?php while( $customer = mysqli_fetch_array( $contacts) ) : 
-             echo "<tr onclick=window.location='adddevice.php?q=$customer[0]'>";?>
+             echo "<tr ondblclick=window.location='adddevice.php?q=$customer[0]'>";?>
                 <td><?php echo $customer[0]; ?></td> 
                 
                 <td><?php echo $customer[1]; ?></td>
