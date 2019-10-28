@@ -78,7 +78,7 @@
     x.open("GET","getcustomer.php?q="+s.value,true);
     x.send();
   }
-  s.onkeypress=function(){
+  s.onkeyup=function(){
     if(s.value!==""){
       tab.removeChild(l);
       loadTable();
