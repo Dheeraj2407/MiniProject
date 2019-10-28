@@ -15,7 +15,14 @@
             <th>Read API</th>
         </tr>';
         while($row=$result->fetch_array()){
-            echo "<tr><td>$row[0]</td><td>$row[1]</td><td>$row[2]</td><td>$row[4]</td><td>$row[5]</td><td>$row[6]</td></tr>";
+            echo "<tr onclick=window.location='adddevice.php?q=$row[0]'>
+                    <td>$row[0]</td>
+                    <td>$row[1]</td>
+                    <td>$row[2]</td>
+                    <td>$row[4]</td>
+                    <td>$row[5]</td>
+                    <td>$row[6]</td>
+                </tr>";
         }
         echo "</table>";
     }
