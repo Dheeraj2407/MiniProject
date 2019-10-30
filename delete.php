@@ -25,6 +25,9 @@
     curl_close($ch);
       
       /*End*/
+      #Delete from 000webhost
+      file_get_contents("http://cvmaison.000webhostapp.com/deleteuser.php?email=".$email);
+      #End
     $cn->query("DELETE FROM CUSTOMER WHERE EMAIL='$email'");
     echo "<script>alert('Account deleted successfully');location.href='home2.php'</script>";
 ?> 

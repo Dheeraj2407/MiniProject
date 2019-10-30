@@ -85,6 +85,9 @@ if($_SERVER['REQUEST_METHOD']=="POST") {
     curl_close($ch);
     
     /*End*/
+    #Creating user on 000webhost
+    file_get_contents("http://cvmaison.000webhostapp.com/createuser.php?email=".$email);
+    #End
     if(isset($admin)){
      if($cn->query("INSERT INTO ADMIN VALUES('$email','$admin')")){
       $account=" admin account created"; 
