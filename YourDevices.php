@@ -33,7 +33,7 @@
     $out=$cn->query("SELECT * FROM OUTCHECK WHERE Email='$email'");
     $out=$out->fetch_array();
     $c=$cn->query("SELECT * FROM CUSTOMER WHERE EMAIL='$email'");
-    $data=file_get_contents("http://cvmaison.000webhostapp.com/read_field.php?email=$email");
+    $data=file_get_contents("http://cvmaison.000webhostapp.com/read_fields.php?email=$email");
     $data=json_decode($data,true);
     $c=$c->fetch_assoc();
     for($i=1;$i<9;$i++){

@@ -41,12 +41,18 @@ unsigned long myChannelNumber = SECRET_CH_ID;
 const char * myWriteAPIKey = SECRET_WRITE_APIKEY;
 
 #include <ESP8266WiFi.h>
+#include <ESP8266HTTPClient.h>
+
+String EMAIL="email=ka48sunil007@gmail.com";
+String FIELD ="&field=3";
+String SERVER_NAME= "http://cvmaison.000webhostapp.com/read_field.php?"+EMAIL+FIELD;
 
 char ssid[] = SECRET_SSID;   // your network SSID (name)
 char pass[] = SECRET_PASS;   // your network password
-int keyIndex = 0;            // your network key index number (needed only for WEP)
-WiFiClient  client;
+int keyIndex = 0,counter=0;            // your network key index number (needed only for WEP)
 
+WiFiClient  client;
+HTTPClient http;
 void setup() {
   Serial.begin(115200);
   delay(100);
@@ -54,6 +60,7 @@ void setup() {
   WiFi.mode(WIFI_STA);
 
   ThingSpeak.begin(client);
+  pinMode(14,OUTPUT);
 }
 
 void loop() {
@@ -72,21 +79,64 @@ void loop() {
 
   // Measure Signal Strength (RSSI) of Wi-Fi connection
   //long rssi = WiFi.RSSI();
-    float h = dht.readHumidity();
-    float t = dht.readTemperature();
+    
+  //Connect to server
+  http.begin(SERVER_NAME);
+  int httpCode=http.GET();
+  
+  //Fetching from server
+  // httpCode will be negative on error. Success http code is 200
+        if(httpCode > 0) {
+            Serial.printf("[HTTP] GET... code: %d\n", httpCode);
+
+            // receive response from the Server
+            if(httpCode == HTTP_CODE_OK) {
+                // On successful connection
+                Serial.print("[HTTP] Received HTML...\n");
+                String payload = http.getString();
+                Serial.println(payload);
+                if(payload.toInt()==0)
+                  digitalWrite(14,LOW);
+                else if(payload.toInt()==1)
+                  digitalWrite(14,HIGH);
+                 
+                Serial.flush();
+            }
+        } else {
+            Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
+        }
+
+        
+
+
+
+
+  
 
   // Write value to Field 1 of a ThingSpeak Channel
-  int httpCode = ThingSpeak.writeField(myChannelNumber, 1, t, myWriteAPIKey);
-  delay(15000);
-    ThingSpeak.writeField(myChannelNumber, 2, h, myWriteAPIKey);
-
-  if (httpCode == 200) {
-    Serial.println("Channel write successful.");
+  if(counter==15){
+    float h = dht.readHumidity();
+    int httpCode = ThingSpeak.writeField(myChannelNumber, 2, h, myWriteAPIKey);
+    if (httpCode == 200) {
+      Serial.println("Channel write successful.");
+    }
+    else {
+      Serial.println("Problem writing to channel. HTTP error code " + String(httpCode));
+    }
   }
-  else {
-    Serial.println("Problem writing to channel. HTTP error code " + String(httpCode));
+  else if(counter==30){
+    counter=-1;
+    float t = dht.readTemperature();
+    int httpCode = ThingSpeak.writeField(myChannelNumber, 1, t, myWriteAPIKey);
+    if (httpCode == 200) {
+      Serial.println("Channel write successful.");
+    }
+    else {
+      Serial.println("Problem writing to channel. HTTP error code " + String(httpCode));
+    }
   }
-
-  // Wait 20 seconds to uodate the channel again
-  delay(20000);
+  // Wait 1 second to update the channel again
+  counter++;
+  //client.
+  delay(1000); 
 }
