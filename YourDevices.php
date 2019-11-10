@@ -33,11 +33,14 @@
     $out=$cn->query("SELECT * FROM OUTCHECK WHERE Email='$email'");
     $out=$out->fetch_array();
     $c=$cn->query("SELECT * FROM CUSTOMER WHERE EMAIL='$email'");
+    $data=file_get_contents("http://cvmaison.000webhostapp.com/read_field.php?email=$email");
+    $data=json_decode($data,true);
     $c=$c->fetch_assoc();
     for($i=1;$i<9;$i++){
       if($fields[$i]!=""){
         if($out[$i]==1){
-          
+          #echo $data['field1'];
+          echo "<figure><img id=$i src=".$data["field$i"].".gif onclick=change(this.id)><figcaption><b>$fields[$i]</b></figcaption></figure>";
         }
         else{
           echo '<figure><iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/'.$c["channelid"].'/charts/'.$i.'?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"></iframe>';
@@ -48,4 +51,22 @@
   ?>
 </div>
 </body>
+<script>
+  function change(id){
+    var x=new XMLHttpRequest();
+    var image=document.getElementById(id);
+    var val;
+    if(image.getAttribute('src')=='1.gif')
+      val=0;
+    else
+      val=1;
+    x.onreadystatechange=function(){
+      if(this.readyState==4 && this.status==200){
+        image.setAttribute('src',val+'.gif');
+      }
+    }
+    x.open("GET","write_field.php?email=<?php echo $email;?>&field="+id+"&value="+val);
+    x.send();
+  }
+</script>
 </html>
