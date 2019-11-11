@@ -43,7 +43,7 @@ const char * myWriteAPIKey = SECRET_WRITE_APIKEY;
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
 
-String EMAIL="email=ka48sunil007@gmail.com";
+String EMAIL="email=immanuelebe30@gmail.com";
 String FIELD ="&field=3";
 String SERVER_NAME= "http://cvmaison.000webhostapp.com/read_field.php?"+EMAIL+FIELD;
 
@@ -114,29 +114,32 @@ void loop() {
   
 
   // Write value to Field 1 of a ThingSpeak Channel
-  if(counter==15){
+  if(counter==0){
     float h = dht.readHumidity();
     int httpCode = ThingSpeak.writeField(myChannelNumber, 2, h, myWriteAPIKey);
     if (httpCode == 200) {
-      Serial.println("Channel write successful.");
+      Serial.println("Channel write successful humidity.");
+      Serial.println(h);
     }
     else {
-      Serial.println("Problem writing to channel. HTTP error code " + String(httpCode));
+      Serial.println("Problem writing humidity to channel. HTTP error code " + String(httpCode));
     }
   }
-  else if(counter==30){
-    counter=-1;
+  else if(counter==15){
     float t = dht.readTemperature();
     int httpCode = ThingSpeak.writeField(myChannelNumber, 1, t, myWriteAPIKey);
     if (httpCode == 200) {
-      Serial.println("Channel write successful.");
+      Serial.println("Channel write successful temperature.");
+      Serial.println(t);
     }
     else {
-      Serial.println("Problem writing to channel. HTTP error code " + String(httpCode));
+      Serial.println("Problem writing temperature to channel. HTTP error code " + String(httpCode));
     }
   }
   // Wait 1 second to update the channel again
   counter++;
+  if(counter>=30)
+    counter=0;
   //client.
   delay(1000); 
 }

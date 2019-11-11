@@ -50,6 +50,7 @@
     }
   ?>
 </div>
+<br><br><br>
 </body>
 <script>
   function change(id){
