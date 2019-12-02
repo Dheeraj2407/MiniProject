@@ -37,7 +37,7 @@
       //logout();
       ?>
   </h1>
-  <p>A navigation bar is a navigation header that is placed at the top of the page.</p>
+  <p><embed src="PDF/Usermanual.pdf" width="100%" height="100%"></p>
 </div>
 </body>
 </html>

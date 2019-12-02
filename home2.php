@@ -630,8 +630,7 @@
         It can be used to monitor a kid at home or even measure the safety of an old person, man or woman alone.
 
         Is it of any cost?
-        Na, only your data will be cost!
-
+        Na, you spend only for your internet connection.
         </pre>
       </div>
 
